@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2015 Hasan Ali Karaca - http://www.hasanalikaraca.com
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="10dp">
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/tools"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:elevation="10dp"
+        android:foreground="?attr/selectableItemBackground"
+
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="8dp"
+
+        card_view:cardCornerRadius="2dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="fill_vertical"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tvChallengeType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:hint="UI Prototype Competition"
+                android:textIsSelectable="true"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:id="@+id/llPrize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="false"
+                android:layout_below="@id/tvChallengeType"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:id="@+id/tvTotalPrize"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:hint="100$"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/tvCurrentPhaseRemainingTime"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:gravity="center_horizontal"
+                    android:hint="1d 10h"
+                    android:textIsSelectable="true"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvCurrentPhaseName"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:gravity="right"
+                    android:hint="Registration"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvChallengeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llPrize"
+                android:layout_marginBottom="10dp"
+
+                android:gravity="fill_vertical"
+                android:hint="Platane Frontend Integration 1 Platane Frontend Integration 1"
+                android:maxLines="3"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTechnologies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvChallengeName"
+                android:layout_marginBottom="10dp"
+                android:maxLines="2"
+                android:textIsSelectable="false"
+                android:textSize="10sp"
+                android:textStyle="italic" />
+
+            <LinearLayout
+                android:id="@+id/llStartDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvTechnologies"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:hint="Start:"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tvRegistrationStartDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+
+                    android:gravity="left"
+                    android:hint="01 May"
+                    android:textSize="11sp" />
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+
+                    android:gravity="right"
+                    android:hint="Register: "
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tvRegistrationEndDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+
+                    android:hint="01 May"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+
+                    android:gravity="right"
+                    android:hint="Submit: "
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tvSubmissionEndDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+
+                    android:hint="10 May"
+                    android:textSize="11sp" />
+
+
+            </LinearLayout>
+
+
+            <!--   <GridLayout
+                   android:id="@+id/llTechnologiesContainer"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:layout_gravity="center"
+                   android:columnCount="3">
+               </GridLayout>-->
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

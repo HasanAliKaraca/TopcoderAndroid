@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="General">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="receiveNotifications"
+            android:summary="Want to receive Push Notifications ?"
+            android:title="Receive Notifications" />
+
+        <ListPreference
+            android:entries="@array/preferred_challenge_type_name_list_preference"
+            android:entryValues="@array/preferred_challenge_type_value_list_preference"
+            android:summary="%s"
+            android:defaultValue="1"
+            android:key="preferredChallengeType"
+            android:title="Challenge Type" />
+
+
+    </PreferenceCategory>
+
+
+
+</PreferenceScreen>

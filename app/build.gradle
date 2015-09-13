@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        applicationId "com.example.ali.topcoderandroid"
+        minSdkVersion 18
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+}
+
+dependencies {
+    //date time lib
+    //compile 'net.danlew:android.joda:2.8.2'
+    //jackson for mapping
+    /*  compile 'com.fasterxml.jackson.core:jackson-core:2.4.2'
+        compile 'com.fasterxml.jackson.core:jackson-annotations:2.4.0'
+        compile 'com.fasterxml.jackson.core:jackson-databind:2.4.2'*/
+    /*volley*/
+    /*recyclerview*/
+    compile 'com.android.support:design:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:cardview-v7:23.0.1'
+    compile 'com.android.support:recyclerview-v7:23.0.1'
+    compile 'com.android.support:support-v4:23.0.1'
+    compile 'com.github.bumptech.glide:glide:3.6.1'
+    compile 'de.hdodenhof:circleimageview:1.3.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.loopj.android:android-async-http:1.4.6'
+    compile 'com.mcxiaoke.volley:library:1.0.18'
+    compile 'org.lucasr.twowayview:twowayview:0.1.4'
+}

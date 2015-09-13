@@ -1,0 +1,24 @@
+<resources>
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="TopcoderTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <item name="android:divider">#B6B6B6</item>
+        <!--<item name="android:windowBackground">@color/window_background</item>-->
+        <item name="android:actionModeBackground">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
+
+    </style>
+
+    <style name="TopcoderTheme" parent="TopcoderTheme.Base"></style>
+
+
+</resources>
