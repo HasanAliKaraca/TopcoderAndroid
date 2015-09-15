@@ -1,56 +1,56 @@
-package com.example.ali.topcoderandroid.Activities;
+/*
+* Copyright (C) 2015 Hasan Ali Karaca - http://www.hasanalikaraca.com
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
+package com.example.ali.topcoderandroid.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.example.ali.topcoderandroid.Api.ChallengeType;
-import com.example.ali.topcoderandroid.Api.TopcoderClient;
-import com.example.ali.topcoderandroid.Helpers.LogHelper;
 import com.example.ali.topcoderandroid.Models.ChallengeModel;
-import com.example.ali.topcoderandroid.Models.DataInfoModel;
 import com.example.ali.topcoderandroid.R;
-import com.example.ali.topcoderandroid.ui.ChallengeRecyclerView;
-import com.example.ali.topcoderandroid.ui.ChallengeRecyclerViewAdapter;
-
-import org.json.JSONObject;
-
-import java.util.ArrayList;
+import com.example.ali.topcoderandroid.ui.RecyclerViewFragment;
 
 
 public class MainActivity extends AppCompatActivity {
 
-
+    ChallengeType preferredChallengeType;
+    RecyclerViewFragment recyclerViewFragment;
     private CoordinatorLayout coordinatorLayout;
     private Context context = this;
-    private ChallengeRecyclerView recyclerView;
-    private ChallengeRecyclerViewAdapter challengeRecyclerViewAdapter;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
-    private ChallengeType preferredChallengeType;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private ShareActionProvider mShareActionProvider;
     // Tracks current contextual action mode
     private ActionMode currentActionMode;
@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,45 +112,28 @@ public class MainActivity extends AppCompatActivity {
         //This will make our app properly initialized with default settings when first loaded.
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-
-        preferredChallengeType = ChallengeType.getPreferred(sharedPreferences);
-
-        //Initializing NavigationView
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
-
-
-        setNavigation(navigationView, preferredChallengeType);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         setDrawerListener(drawerLayout);
 
-        /*init list*/
-        recyclerView = (ChallengeRecyclerView) this.findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        recyclerView.setEmptyView(findViewById(android.R.id.empty));
-        recyclerView.setHasFixedSize(true);
-
-
-        /*init pull to refresh*/
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-        setSwipeRefresh(swipeRefreshLayout);
-
-        fetchChallenges(preferredChallengeType);
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_content);
 
+        if (savedInstanceState == null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            recyclerViewFragment = new RecyclerViewFragment();
+            transaction.replace(R.id.recyclerview_fragment_container, recyclerViewFragment);
+            transaction.commit();
+        }
+
+        //Initializing NavigationView
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        preferredChallengeType = ChallengeType.getPreferred(context);
+        setNavigation(navigationView, preferredChallengeType);
+
     }
 
-    private void setSwipeRefresh(SwipeRefreshLayout swipeRefreshLayout) {
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                fetchChallenges(preferredChallengeType);
-            }
-        });
-    }
 
     private void setDrawerListener(DrawerLayout drawerLayout) {
 
@@ -202,6 +184,8 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+
                 //Checking if the item is in checked state or not, if not make it in checked state
                 if (!menuItem.isChecked()) {
                     menuItem.setChecked(true);
@@ -232,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                 }
 
-                fetchChallenges(preferredChallengeType);
+                recyclerViewFragment.fetchChallenges(preferredChallengeType);
                 return true;
 
             }
@@ -282,110 +266,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void fetchChallenges(ChallengeType challengeType) {
-        //todo change if fragment to --> context = getActivity();
-        //context = this;//getApplicationContext();
 
-        TopcoderClient client = new TopcoderClient();
-
-        Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-                //ObjectMapper mapper = new ObjectMapper();
-
-                try {
-
-                    ArrayList<ChallengeModel> list = DataInfoModel.mapJsonToChallengeModelArray(response);
-
-                    //String str = response.toString();
-                    //DataInfoModel d = mapper.readValue(str,DataInfoModel.class);
-
-                    //JSONArray data = response.getJSONArray("data");
-                    //ChallengeModel[] info = mapper.readValue(data.toString(), ChallengeModel[].class);
-
-
-                    UpdateChallengeListOnUI(list);
-
-                } catch (Exception e) {
-
-                    LogHelper.Log(e);
-                    //Toast.makeText(MainActivity.this, "Server error occured when getting list.", Toast.LENGTH_LONG).show();
-                    Snackbar.make(coordinatorLayout, "Server error occured when getting list.", Snackbar.LENGTH_LONG).show();
-                }
-
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                try {
-
-                    if (error.networkResponse != null) {
-                        String networkResponseStatusCode = String.valueOf(error.networkResponse.statusCode);
-                        String errorMessage = "Network error: " + networkResponseStatusCode + ". Try again in a few sec";
-                        Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
-                    }
-                } catch (Exception e) {
-                    LogHelper.Log(e);
-                }
-
-                LogHelper.Log(error);
-
-                UpdateChallengeListOnUI(new ArrayList<ChallengeModel>());
-
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        };
-
-        client.getChallenges(context, challengeType, responseListener, errorListener);
-
+    @Override
+    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+        return super.onCreateView(parent, name, context, attrs);
     }
 
-    private void UpdateChallengeListOnUI(ArrayList<ChallengeModel> list) {
-        challengeRecyclerViewAdapter = new ChallengeRecyclerViewAdapter(recyclerView.getContext(), list);
-
-        recyclerView.setAdapter(challengeRecyclerViewAdapter);
-
-      /*  recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View childView, int position) {
-
-                if (childView != null) {
-                    int childPosition = recyclerView.getChildAdapterPosition(childView);
-
-                    ChallengeRecyclerViewAdapter adapter = (ChallengeRecyclerViewAdapter) recyclerView.getAdapter();
-                    ChallengeModel item = adapter.get(childPosition);
-
-                    Toast.makeText(MainActivity.this, item.getChallengeName(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onItemLongPress(View childView, int position) {
-
-                if (currentActionMode != null) {
-                    return;
-                }
-
-                if (childView != null) {
-                    int childPosition = recyclerView.getChildAdapterPosition(childView);
-
-                    ChallengeRecyclerViewAdapter adapter = (ChallengeRecyclerViewAdapter) recyclerView.getAdapter();
-                    selectedItem = adapter.get(childPosition);
-
-
-                    //Toast.makeText(MainActivity.this, item.getChallengeName(), Toast.LENGTH_SHORT).show();
-                }
-                startSupportActionMode(modeCallBack);
-                childView.setSelected(true);
-
-
-            }
-        }));*/
-
-
-    }
 }

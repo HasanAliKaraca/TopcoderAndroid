@@ -1,3 +1,19 @@
+/*
+* Copyright (C) 2015 Hasan Ali Karaca - http://www.hasanalikaraca.com
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
 package com.example.ali.topcoderandroid.ui;
 
 import android.content.Context;
@@ -7,14 +23,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * Used for listening to RecyclerView item clicks. You can either implement an OnItemClickListener
- * or extend SimpleOnItemClickListener and override its methods.
- * <p/>
- * Licence: MIT
- *
- * @author Leo Nikkilä <hello@lnikki.la>
- */
 public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
 
     protected OnItemClickListener listener;
@@ -65,7 +73,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
          * @param childView View of the item that was clicked.
          * @param position  Position of the item that was clicked.
          */
-        public void onItemClick(View childView, int position);
+        void onItemClick(View childView, int position);
 
         /**
          * Called when an item is long pressed.
@@ -73,7 +81,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
          * @param childView View of the item that was long pressed.
          * @param position  Position of the item that was long pressed.
          */
-        public void onItemLongPress(View childView, int position);
+        void onItemLongPress(View childView, int position);
 
     }
 

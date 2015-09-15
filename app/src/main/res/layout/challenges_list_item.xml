@@ -53,7 +53,7 @@
 
                 android:hint="UI Prototype Competition"
                 android:textIsSelectable="true"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
             <LinearLayout
                 android:id="@+id/llPrize"
@@ -70,7 +70,7 @@
                     android:layout_weight="1"
 
                     android:hint="100$"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
 
@@ -83,7 +83,7 @@
                     android:gravity="center_horizontal"
                     android:hint="1d 10h"
                     android:textIsSelectable="true"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tvCurrentPhaseName"
@@ -93,7 +93,7 @@
 
                     android:gravity="right"
                     android:hint="Registration"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
             </LinearLayout>
 
@@ -118,7 +118,7 @@
                 android:layout_marginBottom="10dp"
                 android:maxLines="2"
                 android:textIsSelectable="false"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:textStyle="italic" />
 
             <LinearLayout
@@ -134,7 +134,7 @@
                     android:layout_weight="1"
 
                     android:hint="Start:"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tvRegistrationStartDate"
@@ -144,7 +144,7 @@
 
                     android:gravity="left"
                     android:hint="01 May"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
 
 
                 <TextView
@@ -154,7 +154,7 @@
 
                     android:gravity="right"
                     android:hint="Register: "
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tvRegistrationEndDate"
@@ -163,7 +163,7 @@
                     android:layout_weight="2"
 
                     android:hint="01 May"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -172,7 +172,7 @@
 
                     android:gravity="right"
                     android:hint="Submit: "
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tvSubmissionEndDate"
@@ -181,7 +181,7 @@
                     android:layout_weight="2"
 
                     android:hint="10 May"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
 
 
             </LinearLayout>
