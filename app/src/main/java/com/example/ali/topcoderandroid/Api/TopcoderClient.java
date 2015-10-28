@@ -63,7 +63,7 @@ public class TopcoderClient {
     }
 
 
-    public void getChallengeDetails(Context context, Long challengeId, Response.Listener<JSONObject> responseListener,
+    public void getChallengeDetails(Context context, String challengeId, Response.Listener<JSONObject> responseListener,
                                     Response.ErrorListener errorListener) {
 
         String url = getApiUrl(API_CHALLENGE_DETAIL + challengeId);

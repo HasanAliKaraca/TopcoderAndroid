@@ -42,4 +42,6 @@
     </string-array>
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
+    <string name="title_challenge_list">Challenges</string>
+    <string name="title_challenge_detail">Challenge Detail</string>
 </resources>

@@ -36,5 +36,9 @@
 
     <style name="TopcoderTheme" parent="TopcoderTheme.Base" />
 
+    <style name="TopcoderTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="TopcoderTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
 </resources>

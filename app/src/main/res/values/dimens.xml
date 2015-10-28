@@ -33,4 +33,5 @@
     <dimen name="keyline2">72dp</dimen>
     <item name="keyline3" type="dimen">@dimen/standard_margin</item>
     <integer name="list_columns">1</integer>
+    <dimen name="app_bar_height">200dp</dimen>
 </resources>

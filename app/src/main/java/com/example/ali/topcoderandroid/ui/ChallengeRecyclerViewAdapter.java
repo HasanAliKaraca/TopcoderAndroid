@@ -17,12 +17,14 @@
 package com.example.ali.topcoderandroid.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ali.topcoderandroid.Activities.ChallengeDetailActivity;
 import com.example.ali.topcoderandroid.Interfaces.ItemClickListener;
 import com.example.ali.topcoderandroid.Models.ChallengeModel;
 import com.example.ali.topcoderandroid.R;
@@ -85,16 +87,15 @@ public class ChallengeRecyclerViewAdapter extends
 
         ChallengeModel challenge = mChallengeList.get(position);
 
-        /*if (mCrime != null) {
-            Intent i = CrimeActivity.getIntent(v.getContext(), mCrime);
-            startActivity(i);
-        }*/
+        Context context = view.getContext();
 
+        if (context != null) {
+            Intent intent = new Intent(context, ChallengeDetailActivity.class);
+            intent.putExtra(ChallengeDetailActivity.CHALLENGE_ID_TAG, challenge);
 
-       /*   Intent intent = new Intent(context, CheeseDetailActivity.class);
-        intent.putExtra(CheeseDetailActivity.EXTRA_NAME, holder.mBoundString);
+            context.startActivity(intent);
+        }
 
-        context.startActivity(intent);*/
 
     }
 }

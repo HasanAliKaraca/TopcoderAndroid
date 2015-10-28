@@ -37,6 +37,22 @@ public class DataInfoModel {
         data = new ArrayList<>();
     }
 
+    public static ChallengeDetailModel mapJsonToChallengeDetailModel(JSONObject json) {
+        DataInfoModel d = new DataInfoModel();
+
+        ChallengeDetailModel response;
+
+        try {
+            response = ChallengeDetailModel.mapJsonToChallengeDetailModel(json);
+
+        } catch (Exception e) {
+            LogHelper.Log(e);
+            return null;
+        }
+
+        return response;
+    }
+
     public static ArrayList<ChallengeModel> mapJsonToChallengeModelArray(JSONObject json) {
         DataInfoModel d = new DataInfoModel();
 
@@ -62,7 +78,6 @@ public class DataInfoModel {
 
         return list;
     }
-
 
     public ArrayList<ChallengeModel> getData() {
         return data;
