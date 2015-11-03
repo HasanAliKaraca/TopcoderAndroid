@@ -38,7 +38,7 @@ public class ChallengeViewHolder extends RecyclerView.ViewHolder implements View
     public final TextView tvTotalPrize;
     public final TextView tvCurrentPhaseRemainingTime;
     public final TextView tvCurrentPhaseName;
-    public final TextView tvRegistrationStartDate;
+    public final TextView tvPostingDate;
     public final TextView tvRegistrationEndDate;
     public final TextView tvSubmissionEndDate;
 
@@ -53,7 +53,7 @@ public class ChallengeViewHolder extends RecyclerView.ViewHolder implements View
         this.tvTotalPrize = (TextView) view.findViewById(R.id.tvTotalPrize);
         this.tvCurrentPhaseRemainingTime = (TextView) view.findViewById(R.id.tvCurrentPhaseRemainingTime);
         this.tvCurrentPhaseName = (TextView) view.findViewById(R.id.tvCurrentPhaseName);
-        this.tvRegistrationStartDate = (TextView) view.findViewById(R.id.tvRegistrationStartDate);
+        this.tvPostingDate = (TextView) view.findViewById(R.id.tvPostingDate);
         this.tvRegistrationEndDate = (TextView) view.findViewById(R.id.tvRegistrationEndDate);
         this.tvSubmissionEndDate = (TextView) view.findViewById(R.id.tvSubmissionEndDate);
 
@@ -75,10 +75,11 @@ public class ChallengeViewHolder extends RecyclerView.ViewHolder implements View
         String technologies = Arrays.toString(techNameArr).replace("[", "").replace("]", "");
 
         String challengeType = challenge.getChallengeType();
-        String totalPrize = "$" + challenge.getTotalPrize();
 
-        Long currentPhaseRemainingTime = challenge.getCurrentPhaseRemainingTime();
-        String currentPhaseRemainingTimeString = DateTimeParser.ParseSecondToDayAndHour(challenge.getCurrentPhaseRemainingTime());
+        String totalPrize = "$" + challenge.getTotalPrize(); //+ ChallengeModel.getTotalPrice(challenge.getPrize());
+
+
+
         String currentPhaseName = challenge.getCurrentPhaseName();
 
         String registrationStartDate = DateTimeParser.ParseDateTime(challenge.getRegistrationStartDate());
@@ -88,6 +89,12 @@ public class ChallengeViewHolder extends RecyclerView.ViewHolder implements View
         tvTechnologies.setText(technologies);
         tvChallengeType.setText(challengeType);
         tvTotalPrize.setText(totalPrize);
+
+        //take positive
+        Long currentPhaseRemainingTime = Math.abs(challenge.getCurrentPhaseRemainingTime());
+
+        String currentPhaseRemainingTimeString = DateTimeParser.ParseSecondToDayAndHour(currentPhaseRemainingTime);
+
         tvCurrentPhaseRemainingTime.setText(currentPhaseRemainingTimeString);
         if (currentPhaseRemainingTime < 7200) {
             try {
@@ -100,7 +107,7 @@ public class ChallengeViewHolder extends RecyclerView.ViewHolder implements View
         }
 
         tvCurrentPhaseName.setText(currentPhaseName);
-        tvRegistrationStartDate.setText(registrationStartDate);
+        tvPostingDate.setText(registrationStartDate);
         tvRegistrationEndDate.setText(registrationEndDate);
         tvSubmissionEndDate.setText(submissionEndDate);
         tvChallengeName.setText(challengeName);

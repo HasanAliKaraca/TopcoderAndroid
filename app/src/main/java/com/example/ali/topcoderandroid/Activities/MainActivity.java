@@ -26,7 +26,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
@@ -42,7 +41,7 @@ import com.example.ali.topcoderandroid.R;
 import com.example.ali.topcoderandroid.ui.RecyclerViewFragment;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     ChallengeType preferredChallengeType;
     RecyclerViewFragment recyclerViewFragment;

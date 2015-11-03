@@ -31,9 +31,8 @@ dependencies {
     /*  compile 'com.fasterxml.jackson.core:jackson-core:2.4.2'
         compile 'com.fasterxml.jackson.core:jackson-annotations:2.4.0'
         compile 'com.fasterxml.jackson.core:jackson-databind:2.4.2'*/
-    /*volley*/
-    /*recyclerview*/
     compile 'com.android.support:design:23.0.1'
+    // compile 'com.android.support:percent:23.1.0'
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:cardview-v7:23.0.1'
     compile 'com.android.support:recyclerview-v7:23.0.1'

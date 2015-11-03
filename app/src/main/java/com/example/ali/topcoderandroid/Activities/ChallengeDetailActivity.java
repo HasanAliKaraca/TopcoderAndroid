@@ -21,20 +21,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.ali.topcoderandroid.Api.TopcoderClient;
+import com.example.ali.topcoderandroid.Helpers.DateTimeParser;
 import com.example.ali.topcoderandroid.Helpers.LogHelper;
 import com.example.ali.topcoderandroid.Models.ChallengeDetailModel;
 import com.example.ali.topcoderandroid.Models.ChallengeModel;
@@ -43,7 +42,9 @@ import com.example.ali.topcoderandroid.R;
 
 import org.json.JSONObject;
 
-public class ChallengeDetailActivity extends AppCompatActivity {
+import java.util.Arrays;
+
+public class ChallengeDetailActivity extends BaseActivity {
 
     public static String CHALLENGE_ID_TAG = "CHALLENGE_ID";
     private ChallengeModel challenge;
@@ -94,14 +95,14 @@ public class ChallengeDetailActivity extends AppCompatActivity {
 
                     ChallengeDetailModel model = DataInfoModel.mapJsonToChallengeDetailModel(response);
 
-                    if (model != null)
-                        UpdateUI(model);
+                    if (model != null) {
+                        bindChallenge(model);
+                    }
 
                 } catch (Exception e) {
                     LogHelper.Log(e);
                 }
 
-                String t = "";
 
                 //swipeRefreshLayout.setRefreshing(false);
 
@@ -139,35 +140,30 @@ public class ChallengeDetailActivity extends AppCompatActivity {
 
     }
 
-    private void UpdateUI(ChallengeDetailModel model) {
-
-
-        TextView tvChallengeDetailContent = (TextView) findViewById(R.id.tvChallengeDetailContent);
-
-        Spanned detailHtmlContent = Html.fromHtml(model.getDetailedRequirements());
-
-        tvChallengeDetailContent.setText(detailHtmlContent);
-
-
-    }
-
 
     private void showProgressBar() {
-        //LinearLayout content = (LinearLayout) findViewById(R.id.content);
-        CardView content = (CardView) findViewById(R.id.content);
-        content.setVisibility(View.GONE);
 
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.VISIBLE);
+        try {
+
+            findViewById(R.id.content).setVisibility(View.GONE);
+
+            findViewById(R.id.progressBarContainer).setVisibility(View.VISIBLE);
+
+        } catch (Exception e) {
+            LogHelper.Log(e);
+        }
     }
 
-    private void hideProgressBar() {
-        //LinearLayout content = (LinearLayout) findViewById(R.id.content);
-        CardView content = (CardView) findViewById(R.id.content);
-        content.setVisibility(View.VISIBLE);
 
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.GONE);
+    private void hideProgressBar() {
+        try {
+            findViewById(R.id.content).setVisibility(View.VISIBLE);
+
+            findViewById(R.id.progressBarContainer).setVisibility(View.GONE);
+
+        } catch (Exception e) {
+            LogHelper.Log(e);
+        }
     }
 
     @Override
@@ -190,5 +186,113 @@ public class ChallengeDetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void bindChallenge(ChallengeDetailModel challengeDetail) {
+
+        try {
+
+            Spanned detailHtmlContent = Html.fromHtml(challengeDetail.getDetailedRequirements());
+            TextView tvDetailedRequirements = (TextView) findViewById(R.id.tvDetailedRequirements);
+            tvDetailedRequirements.setText(detailHtmlContent);
+
+            String challengeName = String.valueOf(challengeDetail.getChallengeName());
+
+            String[] techNameArr = challengeDetail.getTechnology();
+            String technologies = Arrays.toString(techNameArr).replace("[", "").replace("]", "");
+
+            String challengeType = challengeDetail.getChallengeType();
+            String currentPhaseName = challengeDetail.getCurrentPhaseName();
+
+            String registrationStartDate = DateTimeParser.ParseDateTime(challengeDetail.getPostingDate());
+            String registrationEndDate = DateTimeParser.ParseDateTime(challengeDetail.getRegistrationEndDate());
+            String submissionEndDate = DateTimeParser.ParseDateTime(challengeDetail.getSubmissionEndDate());
+
+            long[] prizes = challengeDetail.getPrize();
+            long reliabilityBonus = challengeDetail.getReliabilityBonus();
+            String submissionsCount = challenge.getNumSubmissions();
+            String registrantsCount = challenge.getNumRegistrants();
+
+            TextView tvChallengeName = (TextView) findViewById(R.id.tvChallengeName);
+            TextView tvTechnologies = (TextView) findViewById(R.id.tvTechnologies);
+            TextView tvChallengeType = (TextView) findViewById(R.id.tvChallengeType);
+            TextView tvCurrentPhaseRemainingTime = (TextView) findViewById(R.id.tvCurrentPhaseRemainingTime);
+            TextView tvCurrentPhaseName = (TextView) findViewById(R.id.tvCurrentPhaseName);
+            TextView tvRegistrationStartDate = (TextView) findViewById(R.id.tvPostingDate);
+            TextView tvRegistrationEndDate = (TextView) findViewById(R.id.tvRegistrationEndDate);
+            TextView tvSubmissionEndDate = (TextView) findViewById(R.id.tvSubmissionEndDate);
+
+            TextView tvFirstPrize = (TextView) findViewById(R.id.tvFirstPrize);
+            TextView tvSecondPrize = (TextView) findViewById(R.id.tvSecondPrize);
+            TextView tvThirdPrize = (TextView) findViewById(R.id.tvThirdPrize);
+            TextView tvReliabilityBonus = (TextView) findViewById(R.id.tvReliabilityBonus);
+            TextView tvSubmissionsCount = (TextView) findViewById(R.id.tvSubmissionsCount);
+            TextView tvRegistrantsCount = (TextView) findViewById(R.id.tvRegistrantsCount);
+
+            tvSubmissionsCount.setText(submissionsCount);
+            tvRegistrantsCount.setText(registrantsCount);
+
+            String bonus = getString(R.string.reliability_bonus);
+            tvReliabilityBonus.setText(bonus + reliabilityBonus + "$");
+
+
+            if (prizes != null && prizes.length > 0) {
+
+                try {
+
+                    tvSecondPrize.setVisibility(View.GONE);
+                    tvThirdPrize.setVisibility(View.GONE);
+
+                    Spanned first = Html.fromHtml("<b>1st:</b> " + String.valueOf(prizes[0]) + "$");
+                    tvFirstPrize.setText(first);
+
+                    if (prizes.length >= 2) {
+                        Spanned second = Html.fromHtml("<b>2nd:</b> " + String.valueOf(prizes[1]) + "$");
+                        tvSecondPrize.setText(second);
+                        tvSecondPrize.setVisibility(View.VISIBLE);
+                    }
+
+                    if (prizes.length == 3) {
+                        Spanned third = Html.fromHtml("<b>3rd:</b> " + String.valueOf(prizes[2]) + "$");
+                        tvThirdPrize.setText(third);
+                        tvThirdPrize.setVisibility(View.VISIBLE);
+                    }
+
+
+                } catch (Exception e) {
+                }
+            }
+            //String totalPrize = "$" + challenge.getTotalPrize();
+            //TextView tvTotalPrize = (TextView) findViewById(R.id.tvTotalPrize);
+            //tvTotalPrize.setText(totalPrize);
+
+
+            tvTechnologies.setText(technologies);
+            tvChallengeType.setText(challengeType);
+
+            //take positive
+            Long currentPhaseRemainingTime = Math.abs(challenge.getCurrentPhaseRemainingTime());
+            String currentPhaseRemainingTimeString = DateTimeParser.ParseSecondToDayAndHour(currentPhaseRemainingTime);
+            tvCurrentPhaseRemainingTime.setText(currentPhaseRemainingTimeString);
+            if (currentPhaseRemainingTime < 7200) {
+                try {
+                    int color = ContextCompat.getColor(context, R.color.redColor);
+
+                    tvCurrentPhaseRemainingTime.setTextColor(color); //todo error prone?
+                } catch (Exception e) {
+                    LogHelper.Log(e);
+                }
+            }
+
+            tvCurrentPhaseName.setText(currentPhaseName);
+            tvRegistrationStartDate.setText(registrationStartDate);
+            tvRegistrationEndDate.setText(registrationEndDate);
+            tvSubmissionEndDate.setText(submissionEndDate);
+            tvChallengeName.setText(challengeName);
+
+        } catch (Exception e) {
+            LogHelper.Log(e);
+        }
+
     }
 }

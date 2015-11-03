@@ -17,64 +17,83 @@
 package com.example.ali.topcoderandroid.Models;
 
 import com.example.ali.topcoderandroid.Helpers.LogHelper;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
 import java.io.Serializable;
 
 public class ChallengeModel implements Serializable {
-    private String submissionEndDate;
+
+    private boolean isPrivate;
+    private boolean registrationOpen;
     private long currentPhaseRemainingTime;
-    private String checkpointSubmissionEndDate;
-    private String registrationStartDate;
-    private String registrationEndDate;
-    private String currentPhaseEndDate;
+    private long totalPrize;
+
 
     private String firstPlacePrize;
+
     private String challengeType;
+
+    private String registrationEndDate;
+
     private String[] platforms;
-    private String eventId;
+
+    private String currentPhaseEndDate;
+
     private String challengeName;
+
+    private String eventId;
+
     private String forumId;
-    private boolean isPrivate;
+
+    private String submissionEndDate;
+
     private String numRegistrants;
+
     private String currentPhaseName;
+
     private String status;
+
     private String digitalRunPoints;
-    private String totalPrize;
+
+    private String totalCheckpointPrize;
+
+
     private String numberOfCheckpointsPrizes;
+
     private String reviewType;
+
     private String numSubmissions;
+
     private String reliabilityBonus;
+
     private String[] technologies;
+
+    private String checkpointSubmissionEndDate;
+
     private String eventName;
+
     private String challengeCommunity;
-    private boolean registrationOpen;
+
+
     private String challengeId;
+    private String registrationStartDate;
 
     public static ChallengeModel mapJsonToChallengeModel(JSONObject json) {
-        ChallengeModel item = new ChallengeModel();
+        ChallengeModel item;
         try {
-            item.submissionEndDate = json.getString("submissionEndDate");
-            item.currentPhaseRemainingTime = json.getLong("currentPhaseRemainingTime");
-            item.challengeName = json.getString("challengeName");
-            item.eventId = json.getString("eventId");
+
+            Gson gson = new Gson();
+
+            String jsonString = json.toString();
+
+            item = gson.fromJson(jsonString, ChallengeModel.class);
+
             item.platforms = json.getJSONArray("platforms").toString().replace("},{", " ,").split(" ");
             item.registrationOpen = json.getString("registrationOpen").toLowerCase().trim() == "yes" ? true : false;
-
-            if (json.has("totalPrize"))
-                item.totalPrize = json.getString("totalPrize");
-            else
-                item.totalPrize = "0";
-
-            item.numRegistrants = json.getString("numRegistrants");
-            item.challengeId = json.getString("challengeId");
-            item.numSubmissions = json.getString("numSubmissions");
-            item.registrationStartDate = json.getString("registrationStartDate");
-            item.reviewType = json.getString("reviewType");
-            item.status = json.getString("status");
-            item.registrationEndDate = json.getString("registrationEndDate");
-            item.currentPhaseEndDate = json.getString("currentPhaseEndDate");
+            item.platforms = json.getJSONArray("platforms").toString().replace("},{", " ,").split(" ");
+            item.registrationOpen = json.getString("registrationOpen").toLowerCase().trim() == "yes" ? true : false;
             item.technologies = json.getJSONArray("technologies").toString()
                     .replace("\"", "")
                     .replace("}", "")
@@ -83,24 +102,7 @@ public class ChallengeModel implements Serializable {
                     .replace("]", "")
                     .split(",");
 
-            if (json.has("firstPlacePrize"))
-                item.firstPlacePrize = json.getString("firstPlacePrize");
-            else
-                item.firstPlacePrize = "0";
 
-            if (json.has("digitalRunPoints"))
-                item.digitalRunPoints = json.getString("digitalRunPoints");
-            else
-                item.digitalRunPoints = "0";
-
-
-            item.forumId = json.getString("forumId");
-            item.isPrivate = json.getBoolean("isPrivate");
-            item.currentPhaseName = json.getString("currentPhaseName");
-            item.challengeType = json.getString("challengeType");
-            item.checkpointSubmissionEndDate = json.getString("checkpointSubmissionEndDate");
-            item.reliabilityBonus = json.getString("reliabilityBonus");
-            item.challengeCommunity = json.getString("challengeCommunity");
 
         } catch (Exception e) {
             LogHelper.Log(e);
@@ -109,12 +111,20 @@ public class ChallengeModel implements Serializable {
         return item;
     }
 
-    public String getSubmissionEndDate() {
-        return submissionEndDate;
+    public boolean isPrivate() {
+        return isPrivate;
     }
 
-    public void setSubmissionEndDate(String submissionEndDate) {
-        this.submissionEndDate = submissionEndDate;
+    public void setIsPrivate(boolean isPrivate) {
+        this.isPrivate = isPrivate;
+    }
+
+    public boolean isRegistrationOpen() {
+        return registrationOpen;
+    }
+
+    public void setRegistrationOpen(boolean registrationOpen) {
+        this.registrationOpen = registrationOpen;
     }
 
     public long getCurrentPhaseRemainingTime() {
@@ -123,38 +133,6 @@ public class ChallengeModel implements Serializable {
 
     public void setCurrentPhaseRemainingTime(long currentPhaseRemainingTime) {
         this.currentPhaseRemainingTime = currentPhaseRemainingTime;
-    }
-
-    public String getCheckpointSubmissionEndDate() {
-        return checkpointSubmissionEndDate;
-    }
-
-    public void setCheckpointSubmissionEndDate(String checkpointSubmissionEndDate) {
-        this.checkpointSubmissionEndDate = checkpointSubmissionEndDate;
-    }
-
-    public String getRegistrationStartDate() {
-        return registrationStartDate;
-    }
-
-    public void setRegistrationStartDate(String registrationStartDate) {
-        this.registrationStartDate = registrationStartDate;
-    }
-
-    public String getRegistrationEndDate() {
-        return registrationEndDate;
-    }
-
-    public void setRegistrationEndDate(String registrationEndDate) {
-        this.registrationEndDate = registrationEndDate;
-    }
-
-    public String getCurrentPhaseEndDate() {
-        return currentPhaseEndDate;
-    }
-
-    public void setCurrentPhaseEndDate(String currentPhaseEndDate) {
-        this.currentPhaseEndDate = currentPhaseEndDate;
     }
 
     public String getFirstPlacePrize() {
@@ -173,6 +151,14 @@ public class ChallengeModel implements Serializable {
         this.challengeType = challengeType;
     }
 
+    public String getRegistrationEndDate() {
+        return registrationEndDate;
+    }
+
+    public void setRegistrationEndDate(String registrationEndDate) {
+        this.registrationEndDate = registrationEndDate;
+    }
+
     public String[] getPlatforms() {
         return platforms;
     }
@@ -181,12 +167,12 @@ public class ChallengeModel implements Serializable {
         this.platforms = platforms;
     }
 
-    public String getEventId() {
-        return eventId;
+    public String getCurrentPhaseEndDate() {
+        return currentPhaseEndDate;
     }
 
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
+    public void setCurrentPhaseEndDate(String currentPhaseEndDate) {
+        this.currentPhaseEndDate = currentPhaseEndDate;
     }
 
     public String getChallengeName() {
@@ -197,6 +183,14 @@ public class ChallengeModel implements Serializable {
         this.challengeName = challengeName;
     }
 
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
+
     public String getForumId() {
         return forumId;
     }
@@ -205,12 +199,12 @@ public class ChallengeModel implements Serializable {
         this.forumId = forumId;
     }
 
-    public boolean isPrivate() {
-        return isPrivate;
+    public String getSubmissionEndDate() {
+        return submissionEndDate;
     }
 
-    public void setIsPrivate(boolean isPrivate) {
-        this.isPrivate = isPrivate;
+    public void setSubmissionEndDate(String submissionEndDate) {
+        this.submissionEndDate = submissionEndDate;
     }
 
     public String getNumRegistrants() {
@@ -245,11 +239,19 @@ public class ChallengeModel implements Serializable {
         this.digitalRunPoints = digitalRunPoints;
     }
 
-    public String getTotalPrize() {
+    public String getTotalCheckpointPrize() {
+        return totalCheckpointPrize;
+    }
+
+    public void setTotalCheckpointPrize(String totalCheckpointPrize) {
+        this.totalCheckpointPrize = totalCheckpointPrize;
+    }
+
+    public long getTotalPrize() {
         return totalPrize;
     }
 
-    public void setTotalPrize(String totalPrize) {
+    public void setTotalPrize(long totalPrize) {
         this.totalPrize = totalPrize;
     }
 
@@ -293,6 +295,14 @@ public class ChallengeModel implements Serializable {
         this.technologies = technologies;
     }
 
+    public String getCheckpointSubmissionEndDate() {
+        return checkpointSubmissionEndDate;
+    }
+
+    public void setCheckpointSubmissionEndDate(String checkpointSubmissionEndDate) {
+        this.checkpointSubmissionEndDate = checkpointSubmissionEndDate;
+    }
+
     public String getEventName() {
         return eventName;
     }
@@ -309,14 +319,6 @@ public class ChallengeModel implements Serializable {
         this.challengeCommunity = challengeCommunity;
     }
 
-    public boolean isRegistrationOpen() {
-        return registrationOpen;
-    }
-
-    public void setRegistrationOpen(boolean registrationOpen) {
-        this.registrationOpen = registrationOpen;
-    }
-
     public String getChallengeId() {
         return challengeId;
     }
@@ -324,4 +326,28 @@ public class ChallengeModel implements Serializable {
     public void setChallengeId(String challengeId) {
         this.challengeId = challengeId;
     }
+
+    public String getRegistrationStartDate() {
+        return registrationStartDate;
+    }
+
+    public void setRegistrationStartDate(String registrationStartDate) {
+        this.registrationStartDate = registrationStartDate;
+    }
+
+   /* public static long getTotalPrice(long[] prizeArr){
+        long totalPrize = 0l;
+
+        if (prizeArr != null) {
+            int len = prizeArr.length;
+            long total=0l;
+            for (int i = 0; i < len; i++) {
+                total +=   prizeArr[i]; // .get(i);
+            }
+            totalPrize += total;
+        }
+        return totalPrize;
+    }*/
+
+
 }

@@ -22,9 +22,14 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 public class ChallengeDetailModel implements Serializable {
+
+    private Long currentPhaseRemainingTime;
     private String challengeType;
+    private long[] prize;
+    private long totalPrize;
     private String[] technology;
     private String registrationEndDate;
+    private String finalFixEndDate;
     private String topCheckPointPrize;
     private String[] platforms;
     private String finalSubmissionGuidelines;
@@ -34,7 +39,6 @@ public class ChallengeDetailModel implements Serializable {
     private String currentPhaseEndDate;
     private String cmcTaskId;
     private String challengeName;
-    private String currentPhaseRemainingTime;
     private String forumId;
     private String submissionEndDate;
     private String currentPhaseName;
@@ -44,9 +48,9 @@ public class ChallengeDetailModel implements Serializable {
     private String reviewType;
     private String forumLink;
     private String currentStatus;
+    private long reliabilityBonus;
     private String appealsEndDate;
     private String directUrl;
-    private String[] prize;
     private String detailedRequirements;
     private String checkpointSubmissionEndDate;
     private String challengeCommunity;
@@ -63,6 +67,15 @@ public class ChallengeDetailModel implements Serializable {
 
             item = gson.fromJson(jsonString, ChallengeDetailModel.class);
 
+            item.totalPrize = 0;
+
+            long[] prize = item.prize;
+            if (prize != null) {
+                for (int i = 0; i < prize.length; i++) {
+                    item.totalPrize += prize[i];
+                }
+            }
+
             //item.submissionEndDate = json.getString("submissionEndDate");
 
         } catch (Exception e) {
@@ -72,20 +85,16 @@ public class ChallengeDetailModel implements Serializable {
         return item;
     }
 
-    public String getDigitalRunPoints() {
-        return digitalRunPoints;
+    public void setCurrentPhaseRemainingTime(Long currentPhaseRemainingTime) {
+        this.currentPhaseRemainingTime = currentPhaseRemainingTime;
     }
 
-    public void setDigitalRunPoints(String digitalRunPoints) {
-        this.digitalRunPoints = digitalRunPoints;
+    public long getTotalPrize() {
+        return totalPrize;
     }
 
-    public String getScreeningScorecardId() {
-        return screeningScorecardId;
-    }
-
-    public void setScreeningScorecardId(String screeningScorecardId) {
-        this.screeningScorecardId = screeningScorecardId;
+    public void setTotalPrize(long totalPrize) {
+        this.totalPrize = totalPrize;
     }
 
     public String getChallengeType() {
@@ -110,6 +119,14 @@ public class ChallengeDetailModel implements Serializable {
 
     public void setRegistrationEndDate(String registrationEndDate) {
         this.registrationEndDate = registrationEndDate;
+    }
+
+    public String getFinalFixEndDate() {
+        return finalFixEndDate;
+    }
+
+    public void setFinalFixEndDate(String finalFixEndDate) {
+        this.finalFixEndDate = finalFixEndDate;
     }
 
     public String getTopCheckPointPrize() {
@@ -184,11 +201,11 @@ public class ChallengeDetailModel implements Serializable {
         this.challengeName = challengeName;
     }
 
-    public String getCurrentPhaseRemainingTime() {
+    public long getCurrentPhaseRemainingTime() {
         return currentPhaseRemainingTime;
     }
 
-    public void setCurrentPhaseRemainingTime(String currentPhaseRemainingTime) {
+    public void setCurrentPhaseRemainingTime(long currentPhaseRemainingTime) {
         this.currentPhaseRemainingTime = currentPhaseRemainingTime;
     }
 
@@ -224,6 +241,14 @@ public class ChallengeDetailModel implements Serializable {
         this.postingDate = postingDate;
     }
 
+    public String getDigitalRunPoints() {
+        return digitalRunPoints;
+    }
+
+    public void setDigitalRunPoints(String digitalRunPoints) {
+        this.digitalRunPoints = digitalRunPoints;
+    }
+
     public String getNumberOfCheckpointsPrizes() {
         return numberOfCheckpointsPrizes;
     }
@@ -256,6 +281,14 @@ public class ChallengeDetailModel implements Serializable {
         this.currentStatus = currentStatus;
     }
 
+    public long getReliabilityBonus() {
+        return reliabilityBonus;
+    }
+
+    public void setReliabilityBonus(long reliabilityBonus) {
+        this.reliabilityBonus = reliabilityBonus;
+    }
+
     public String getAppealsEndDate() {
         return appealsEndDate;
     }
@@ -272,11 +305,11 @@ public class ChallengeDetailModel implements Serializable {
         this.directUrl = directUrl;
     }
 
-    public String[] getPrize() {
+    public long[] getPrize() {
         return prize;
     }
 
-    public void setPrize(String[] prize) {
+    public void setPrize(long[] prize) {
         this.prize = prize;
     }
 
@@ -311,4 +344,14 @@ public class ChallengeDetailModel implements Serializable {
     public void setChallengeId(String challengeId) {
         this.challengeId = challengeId;
     }
+
+    public String getScreeningScorecardId() {
+        return screeningScorecardId;
+    }
+
+    public void setScreeningScorecardId(String screeningScorecardId) {
+        this.screeningScorecardId = screeningScorecardId;
+    }
+
+
 }

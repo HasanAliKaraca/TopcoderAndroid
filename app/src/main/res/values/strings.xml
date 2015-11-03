@@ -44,4 +44,6 @@
     <string name="title_item_detail">Item Detail</string>
     <string name="title_challenge_list">Challenges</string>
     <string name="title_challenge_detail">Challenge Detail</string>
+
+    <string name="reliability_bonus">Reliability Bonus: </string>
 </resources>

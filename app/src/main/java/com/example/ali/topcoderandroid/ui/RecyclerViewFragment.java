@@ -70,7 +70,10 @@ public class RecyclerViewFragment extends Fragment implements SwipeRefreshLayout
 
     public void fetchChallenges(ChallengeType challengeType) {
 
+        preferredChallengeType = challengeType;
+
         TopcoderClient client = new TopcoderClient();
+
 
         Response.Listener<JSONObject> responseListener = new Response.Listener<JSONObject>() {
             @Override
